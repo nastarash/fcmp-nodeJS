@@ -1,23 +1,24 @@
 var express = require('express');
 var router = express.Router();
+
 var mongoose = require('mongoose');
 
+var logger = require('./logger');
 
-mongoose.connect("mongodb://127.0.0.1:27017/news",{useNewUrlParser: true});
+mongoose.connect("mongodb://127.0.0.1:27017/news", {
+  useNewUrlParser: true
+});
 
 var Schema = mongoose.Schema;
 var newsSchema = new Schema({
-  title:  String,
+  title: String,
 });
 var News = mongoose.model('News', newsSchema);
 
-router.use(function (req, res, next) {
-  console.log('Something is happening.');
-  next();
-});
-
 router.route('/').post(function (req, res) {
-  var article = new News({title: req.body.title});
+  var article = new News({
+    title: req.body.title
+  });
   article.save(function (err) {
     if (err) {
       res.send(err)
