@@ -1,23 +1,14 @@
 var express = require('express');
 var router = express.Router();
-
-var mongoose = require('mongoose');
-
-var logger = require('./logger');
-
-mongoose.connect("mongodb://127.0.0.1:27017/news", {
-  useNewUrlParser: true
-});
-
-var Schema = mongoose.Schema;
-var newsSchema = new Schema({
-  title: String,
-});
-var News = mongoose.model('News', newsSchema);
+var News = require('../model/newsSchema');
+const fetch = require("node-fetch");
 
 router.route('/').post(function (req, res) {
   var article = new News({
-    title: req.body.title
+    title: req.body.title,
+    source: {
+      id: req.body.id
+    }
   });
   article.save(function (err) {
     if (err) {
