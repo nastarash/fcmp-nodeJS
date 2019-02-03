@@ -12,11 +12,11 @@ var newsRouter = require('./routes/news');
 var app = express();
 
 app.use(passport.initialize());
-app.get('/',
-  passport.authenticate('local'),
-  function (req, res) {
-    res.redirect('/index')
-  }
+app.put('/news/:id',
+  passport.authenticate('local') 
+);
+app.delete('/news/:id',
+  passport.authenticate('local')
 );
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -31,7 +31,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/index', indexRouter);
+app.use('/', indexRouter);
 app.use('/news', newsRouter);
 
 app.use(function (req, res, next) {
