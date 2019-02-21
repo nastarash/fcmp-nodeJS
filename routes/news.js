@@ -5,10 +5,13 @@ const fetch = require("node-fetch");
 
 router.route('/').post(function (req, res) {
   var article = new News({
+    author: req.body.author,
     title: req.body.title,
-    source: {
-      id: req.body.id
-    }
+    description: req.body.description,
+    url: req.body.url,
+    urlToImage: req.body.urlToImage,
+    publishedAt: req.body.publishedAt,
+    content: req.body.content
   });
   article.save(function (err) {
     if (err) {
@@ -43,6 +46,12 @@ router.route('/:id')
         res.send(err);
       } else {
         article.title = req.body.title;
+        article.author= req.body.author;
+        article.description= req.body.description,
+        article.url= req.body.url,
+        article.urlToImage= req.body.urlToImage,
+        article.publishedAt= req.body.publishedAt,
+        article.content= req.body.content
       };
       article.save(function (err) {
         if (err) {
